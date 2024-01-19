@@ -69,7 +69,7 @@ namespace DiffMatchPatch {
     public Diff(Operation operation, string text) {
       // Construct a diff with the specified operation and text.
       this.operation = operation;
-      this.text = text;
+      this.text = text ?? throw new NullReferenceException("text must contain a value.");
     }
 
     /**
