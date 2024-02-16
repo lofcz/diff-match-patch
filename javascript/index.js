@@ -26,7 +26,7 @@
  * Class containing the diff, match and patch methods.
  * @constructor
  */
-var diff_match_patch = function() {
+export const diff_match_patch = function() {
 
   // Defaults.
   // Redefine these in your program to override the defaults.
@@ -62,9 +62,9 @@ var diff_match_patch = function() {
  * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
  * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
  */
-var DIFF_DELETE = -1;
-var DIFF_INSERT = 1;
-var DIFF_EQUAL = 0;
+export const DIFF_DELETE = -1;
+export const DIFF_INSERT = 1;
+export const DIFF_EQUAL = 0;
 
 /**
  * Class representing one diff tuple.
@@ -90,12 +90,12 @@ diff_match_patch.Diff.prototype.toString = function() {
 
 /**
  * Provide an iterable instance on a Diff object.
- * 
+ *
  * While it's not intended that the Diff be iterated,
  * this instance is useful for destructuring assignment.
- * 
+ *
  * Example:
- * 
+ *
  *     const diff = new diff_match_patch.Diff(DIFF_EQUAL, 'hello');
  *     const [op, text] = diff;
  */
@@ -1223,7 +1223,7 @@ diff_match_patch.prototype.diff_cleanupMerge = function(diffs) {
 
 /**
  * Rearrange diff boundaries that split Unicode surrogate pairs.
- * 
+ *
  * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
  */
 diff_match_patch.prototype.diff_cleanupSplitSurrogates = function(diffs) {
@@ -1290,17 +1290,17 @@ diff_match_patch.prototype.digit16 = function(c) {
 
 /**
  * Decode URI-encoded string but allow for encoded surrogate halves
- * 
+ *
  * diff_match_patch needs this relaxation of the requirements because
  * not all libraries and versions produce valid URI strings in toDelta
  * and we don't want to crash this code when the input is valid input
  * but at the same time invalid utf-8
- * 
+ *
  * @example: decodeURI( 'abcd%3A %F0%9F%85%B0' ) = 'abcd: \ud83c\udd70'
  * @example: decodeURI( 'abcd%3A %ED%A0%BC' ) = 'abcd: \ud83c'
- * 
+ *
  * @cite: @mathiasbynens utf8.js at https://github.com/mathiasbynens/utf8.js
- * 
+ *
  * @param {String} text input string encoded by encodeURI() or equivalent
  * @return {String}
  */
@@ -2409,19 +2409,3 @@ diff_match_patch.patch_obj.prototype.toString = function() {
   }
   return text.join('').replace(/%20/g, ' ');
 };
-
-// CLOSURE:begin_strip
-// Lines below here will not be included in the Closure-compatible library.
-
-// Export these global variables so that they survive Google's JS compiler.
-// In a browser, 'this' will be 'window'.
-// Users of node.js should 'require' the uncompressed version since Google's
-// JS compiler may break the following exports for non-browser environments.
-/** @suppress {globalThis} */
-this['diff_match_patch'] = diff_match_patch;
-/** @suppress {globalThis} */
-this['DIFF_DELETE'] = DIFF_DELETE;
-/** @suppress {globalThis} */
-this['DIFF_INSERT'] = DIFF_INSERT;
-/** @suppress {globalThis} */
-this['DIFF_EQUAL'] = DIFF_EQUAL;
