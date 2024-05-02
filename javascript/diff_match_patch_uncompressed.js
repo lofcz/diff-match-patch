@@ -88,6 +88,21 @@ diff_match_patch.Diff.prototype.toString = function() {
   return this[0] + ',' + this[1];
 };
 
+/**
+ * Provide an iterable instance on a Diff object.
+ * 
+ * While it's not intended that the Diff be iterated,
+ * this instance is useful for destructuring assignment.
+ * 
+ * Example:
+ * 
+ *     const diff = new diff_match_patch.Diff(DIFF_EQUAL, 'hello');
+ *     const [op, text] = diff;
+ */
+diff_match_patch.Diff.prototype[Symbol.iterator] = function*() {
+  yield this[0];
+  yield this[1];
+}
 
 /**
  * Find the differences between two texts.  Simplifies the problem by stripping

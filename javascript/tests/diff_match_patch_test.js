@@ -76,6 +76,17 @@ function diff_rebuildtexts(diffs) {
 var dmp = new diff_match_patch();
 
 
+// Diff object TEST FUNCTIONS
+
+function testDiffIsDestructurable() {
+  const diff = new diff_match_patch.Diff(dmp.DIFF_EQUAL, 'six one way half a dozen another');
+  const [op, text] = diff;
+
+  assertEquals(diff[0], op);
+  assertEquals(diff[1], text);
+}
+
+
 // DIFF TEST FUNCTIONS
 
 
