@@ -1,3 +1,9 @@
+'use strict'
+
+import assert from 'node:assert';
+import test from 'node:test';
+import { diff_match_patch, DIFF_DELETE, DIFF_INSERT, DIFF_EQUAL } from '../index.js';
+
 /**
  * Diff Match and Patch -- Test Harness
  * Copyright 2018 The diff-match-patch Authors.
@@ -18,17 +24,11 @@
 
 
 // If expected and actual are the equivalent, pass the test.
-function assertEquivalent(msg, expected, actual) {
-  if (typeof actual == 'undefined') {
-    // msg is optional.
-    actual = expected;
-    expected = msg;
-    msg = 'Expected: \'' + expected + '\' Actual: \'' + actual + '\'';
-  }
+function assertEquivalent(expected, actual) {
   if (_equivalent(expected, actual)) {
-    return assertEquals(msg, String(expected), String(actual));
+    return assertEquals(String(expected), String(actual));
   } else {
-    return assertEquals(msg, expected, actual);
+    return assertEquals(expected, actual);
   }
 }
 
@@ -556,7 +556,7 @@ function testDiffDelta() {
     }
 
     for(let i = 0; i < 1000; i++) {
-      newText = applyRandomTextEdit(originalText);
+      const newText = applyRandomTextEdit(originalText);
       dmp.diff_toDelta(dmp.diff_main(originalText, newText));
     }
   })();
@@ -1105,3 +1105,58 @@ function testPatchApply() {
   results = dmp.patch_apply(patches, 'x');
   assertEquivalent(['x123', [true]], results);
 }
+
+
+/**
+ * Ported from the assertion functions in google's HTML test suite for diff-match-patch
+ *
+ * In order to avoid changing the test code, at least at first, this replicates the browser environment and runs the exact same tests
+ */
+
+function assertEquals(expected, actual) {
+  assert.equal(actual, expected);
+}
+
+function assertTrue(actual) {
+  assertEquals(true, actual);
+}
+
+function assertFalse(actual) {
+  assertEquals(false, actual);
+}
+
+const tests = [
+  'testDiffIsDestructurable',
+  'testDiffCommonPrefix',
+  'testDiffCommonSuffix',
+  'testDiffCommonOverlap',
+  'testDiffHalfMatch',
+  'testDiffLinesToChars',
+  'testDiffCharsToLines',
+  'testDiffCleanupMerge',
+  'testDiffCleanupSemanticLossless',
+  'testDiffCleanupSemantic',
+  'testDiffCleanupEfficiency',
+  'testDiffPrettyHtml',
+  'testDiffText',
+  'testDiffDelta',
+  'testDiffXIndex',
+  'testDiffLevenshtein',
+  'testDiffBisect',
+  'testDiffMain',
+  'testMatchAlphabet',
+  'testMatchBitap',
+  'testMatchMain',
+  'testPatchObj',
+  'testPatchFromText',
+  'testPatchToText',
+  'testPatchAddContext',
+  'testPatchMake',
+  'testPatchSplitMax',
+  'testPatchAddPadding',
+  'testPatchApply'
+];
+
+tests.forEach(item => {
+  test(item, eval(item))
+});
