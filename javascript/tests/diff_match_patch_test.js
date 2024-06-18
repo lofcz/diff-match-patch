@@ -1,6 +1,4 @@
-'use strict'
-
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import test from 'node:test';
 import { diff_match_patch, DIFF_DELETE, DIFF_INSERT, DIFF_EQUAL } from '../index.js';
 
