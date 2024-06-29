@@ -2409,3 +2409,9 @@ diff_match_patch.patch_obj.prototype.toString = function() {
   }
   return text.join('').replace(/%20/g, ' ');
 };
+
+const dmp = {
+  diff_match_patch: diff_match_patch
+};
+
+export default dmp;
